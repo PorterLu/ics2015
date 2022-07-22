@@ -1,0 +1,31 @@
+#include "cpu/exec/template-start.h"
+
+#define instr inc 
+
+static void do_execute () {
+	DATA_TYPE result = op_src->val + 1;
+	OPERAND_W(op_src, result);
+	eflags.CF = 0,eflags.OF=0,eflags.ZF=0,eflags.SF=0,eflags.PF=0;
+	if(result == 0) eflags.ZF = 1;
+	int count=0,i=0,tmp=0x01;
+    for(i=0;i<8;i++)
+    {
+        if((tmp&result)== 1)
+            count++;
+        tmp = tmp << 1;
+    }
+	if(count%2 == 0) eflags.PF = 1;
+	if((op_src->val+1) == 0) eflags.CF = 1;
+	if(MSB(result) == 1) eflags.SF = 1;
+	if( op_src->val == (((DATA_TYPE)0x01)<<(8*DATA_BYTE-1)) - 1) eflags.OF = 1;
+	/* TODO: Update EFLAGS. */
+
+	print_asm_template1();
+}
+
+make_instr_helper(rm)
+#if DATA_BYTE == 2 || DATA_BYTE == 4
+make_instr_helper(r)
+#endif
+
+#include "cpu/exec/template-end.h"
