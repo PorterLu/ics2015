@@ -1,3 +1,7 @@
+# Record
+
+Records (https://github.com/PorterLu/ics2015/blob/main/Nemu攻略.pdf)
+
 # ICS2015 Programming Assignment
 
 This project is the programming assignment of the class ICS(Introduction to Computer System) in Department of Computer Science and Technology, NanJing University.
